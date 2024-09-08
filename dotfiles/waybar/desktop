@@ -1,0 +1,41 @@
+{
+
+"custom/gpu-usage": {
+  "exec": "cat /sys/class/hwmon/hwmon0/device/gpu_busy_percent",
+  "format": "GPU {}%",
+  "return-type": "",
+  "interval": 5,
+},
+
+"custom/gpu-clock": {
+  "exec": "cat /sys/class/drm/card0/device/pp_dpm_sclk | awk -F: '{print $2}' | grep '*' | awk -F: '{print $0}' | tr -d '*' | tr -d ' '",
+  "format": "{}",
+  "return-type": "",
+  "interval": 5,
+},
+
+"custom/gpu-memclock": {
+  "exec": "cat /sys/class/drm/card0/device/pp_dpm_socclk | awk -F: '{print $2}' | grep '*' | awk -F: '{print $0}' | tr -d '*' | tr -d ' '",
+  "format": "{}",
+  "return-type": "",
+  "interval": 5,
+},
+
+"temperature": {
+    "interval": 10,
+    "tooltip": true,
+    "hwmon-path": ["/sys/class/hwmon/hwmon0/temp1_input"],
+    "thermal-zone": 0,
+    "critical-threshold": 82,
+    "format-critical": "{temperatureC}°C",
+    "format": "{temperatureC}°C",
+},
+
+"custom/gpu-temp": {
+	"exec": "cat /sys/class/hwmon/hwmon0/temp1_input | rev | cut -c 4- | rev",
+	"format": "{}°C",
+	"return-type": "",
+	"interval": 10,
+},
+
+}
